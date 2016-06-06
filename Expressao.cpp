@@ -1,4 +1,5 @@
 #include <string>
+#include <cstring>
 #include <iostream>
 #include <ctype.h>
 #include <cstdlib>
@@ -11,7 +12,6 @@ class Expressao{
 		int cont;
 		vector<string> alfabetos;
         vector<char> alfa;
-        //vector<char> palavra;
 
     public:
 		Expressao(){
@@ -42,61 +42,168 @@ class Expressao{
             cout << "---------------------------------------------" << endl << endl;
 		};
 
-        void AFD(string palavra){
-            
-        };
+        void transicaoEstendida(string palavra){
+            int tam = 0, y=0, cont=0;
+            string q0, q1, q2, q3, q4, q5, q6, q7, w, estado = "qo";
+            tam = palavra.length();
+            for(int x = tam-1; x >= 0; x--){
+                cont++;
+                for(int y = 0; y < tam-cont; y++){
+                    w += palavra[y];
+                }
+                if (w == "")
+                    w = "&";
+                cout << " PALAVRA: " << w << " | ÚLTIMO SÍMBOLO: " << palavra[x] << " x: " << x << endl;
+                cout << "---------------------------------------------" << endl;
+                w="";  
+            }
+            cout << endl;
 
-        /*-----------------------------FUNÇÃO QUE VERIFICA SE PERTENCE AO AFD------------------------------*/
-        void verifPertenceAFD (string palavra){
-            int tamanho = 0;
-            tamanho = palavra.length();
-            /*for(){
-                if(palac)
+
+            for(int x = 0; x <= tam; x++){
+                if (x == 0){
+                    cout << estado << ", ";
+                    cout << palavra[x] << endl;
+                    if(estado == "qo" && palavra == "a"){
+                        cout << "---------------------------------------------" << endl;
+                        estado = "q1";
+                        cout << "RETORNO: " << estado << endl;
+                    }
+                    else{
+                        if(estado == "qo" && palavra == "b"){
+                            cout << "---------------------------------------------" << endl;
+                            estado = "qo";
+                            cout << "RETORNO: " << estado << endl;
+                        }
+                    }
+                }
+                
+                else{
+                    if (x == 1){
+                        cout << estado << ", ";
+                        cout << palavra[x] << endl;
+                        if(estado == "q1" && palavra == "a"){
+                            cout << "---------------------------------------------" << endl;
+                            estado = "q2";
+                            cout << "RETORNO: " << estado << endl;
+                        }
+                        else{
+                            if(estado == "q1" && palavra == "b"){
+                                cout << "---------------------------------------------" << endl;
+                                estado = "q3";
+                                cout << "RETORNO: " << estado << endl;
+                            }
+                        }
+                    }
+
+                    else{
+                        /*if(x == 2){
+                            cout << estado << ", ";
+                            cout << palavra[x] << endl;
+                        }*/
+                    }
+                }
             }
 
-            if(palavra[tamanho-1] == q4 || palavra[tamanho-1] == q5 || palavra[tamanho-1] == q6 || palavra[tamanho-1] == q7)
-                cout << " PALAVRA ACEITA PELO AFD" << endl;
+            cout << endl <<" ESTADO RETORNADO: " << estado << endl;
+            if (estado == "q4" || estado == "q5" || estado == "q6" || estado == "q7")
+                cout << " PALAVRA ACEITA PELA O AUTÔMATO!" << endl;
             else
-                cout << " PALAVRA NÃO ACEITA PELO AFD" << endl;*/
+
+                cout << " PALAVRA NÃO É ACEITA PELO O AUTÔMATO!" << endl;
+
+            
             
         }
 
 		/*-----------------------------FUNÇÃO DE TRNASIÇÃO ESTENDIDA DA LINGUAGEM --------------------------*/
 		void funcaoTransicaoEstendida(string palavra){ // δ(q,w) = δ(δ(q,x),a)
-            int tam = 0, y=0;
+            int tam = 0, y=0, cont=0;
             string w;
             tam = palavra.length();
-
-            for(int x = 0; x < tam-1; x++){
-               // for(int y = 0; y < tam; y++){
-                    w += palavra[x];
-               // }
-                cout << " Subpalavra: " << w << endl;
-                //w="";
+            for(int x = tam-1; x >= 0; x--){
+                cont++;
+                for(int y = 0; y < tam-cont; y++){
+                    w += palavra[y];
+                }
+                if (w == ""){
+                    w = "&";
+                }
+                cout << " PALAVRA: " << w << " | ÚLTIMO SÍMBOLO: " << palavra[x] << endl;
+                cout << "---------------------------------------------" << endl;
+               w="";
             }
+            cout << endl;
+
+            string q0, q1, q2, q3, q4, q5, q6, q7, estado;
+            if(estado == "q0" && palavra == "a"){
+                estado = "q1";
+            }else{
+                if(estado == "q0"  && palavra == "b"){
+                    estado = "q0";
+                }else{
+                    if(estado == "q1" && palavra == "a"){
+                        estado = "q2";
+                    }else{
+                        if(estado == "q1" && palavra == "b"){
+                            estado = "q3";
+                        }else{
+                            if(estado == "q2" && palavra == "a"){
+                                estado = "q4";
+                            }else{
+                                if(estado == "q2" && palavra == "b"){
+                                    estado = "q5";
+                                }else{
+                                    if(estado == "q3" && palavra == "a"){
+                                        estado = "q6";
+                                    }else{
+                                        if(estado == "q3" && palavra == "b"){
+                                            estado = "q7";
+                                        }else{
+                                            if(estado == "q4" && palavra == "a"){
+                                                estado = "q4";
+                                            }else{
+                                                if(estado == "q4" && palavra == "b"){
+                                                    estado = "q5";
+                                                }else{
+                                                    if(estado == "q5" && palavra == "a"){
+                                                        estado = "q6";
+                                                    }else{
+                                                        if(estado == "q5" && palavra == "b"){
+                                                            estado = "q7";
+                                                        }else{
+                                                            if(estado == "q6" && palavra == "a"){
+                                                                estado = "q2";
+                                                            }else{
+                                                                if(estado == "q6" && palavra == "b"){
+                                                                    estado = "q3";
+                                                                }else{
+                                                                    if(estado == "q7" && palavra == "a"){
+                                                                        estado = "q1";
+                                                                    }else{
+                                                                        if(estado == "q7" && palavra == "b"){
+                                                                            estado = "q0";
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cout << endl <<" ESTADO RETORNADO: " << estado << endl;
+            if (estado == "q4" || estado == "q5" || estado == "q6" || estado == "q7")
+                cout << " PALAVRA ACEITA PELA O AUTÔMATO!" << endl;
+            else
+                cout << " PALAVRA NÃO É ACEITA PELO O AUTÔMATO!" << endl;
         };
 
-        void naoSeiAinda(){
-            int quantidade;
-            string estados, armazena, alfabeto;
-
-            cout << " INFORME O ALFABETO: ";
-            cin >> alfabeto;
-            cout  << endl;
-            cout << " INFORME A QUANTIDADE DE ESTADOS: ";
-            cin >> quantidade;
-            for (int x = 0; x < quantidade; x++){
-                cout << " " << x+1 << "º ESTADO: ";
-                cin >> estados;
-                armazena += estados;                    
-            }
-            cout << endl << " ESTADOS: " << armazena << endl;
-            cout << " ALFABETO: " << alfabeto << endl;
-            int valor = armazena.length();
-            cout << " TAMANHO: " << valor;
-            for (int x = 0; x < valor-1; x++){
-
-            }
-        }
-        
 };
