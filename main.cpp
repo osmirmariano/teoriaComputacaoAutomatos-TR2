@@ -36,9 +36,9 @@ int main(){
                 cout << "\t FUNCAO DE TRANSICAO ESTENDIDA" << endl;
                 cout << "---------------------------------------------" << endl;
                 cout << " PALAVRA: ";
-                cin >> palavra;
+                cin >> palavra;  
                 cout << "---------------------------------------------" << endl << endl;
-                exp->transicaoEstendida(palavra);
+                exp->funcaoTransicaoEstendida(palavra);
                 break;
             case 0:
                 cout << "PROGRAMA ENCERRADO COM SUCESSO!" << endl;
