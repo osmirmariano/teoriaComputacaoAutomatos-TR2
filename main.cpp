@@ -29,7 +29,7 @@ int main(){
                 cout << endl << "---------------------------------------------" << endl;
                 cout << "\t AFD DA LINGUAGEM " << endl;
                 cout << "---------------------------------------------" << endl;
-                exp->AFD();
+                exp->AFD();  
                 break;
             case 2:
                 cout << endl << "---------------------------------------------" << endl;
@@ -38,7 +38,7 @@ int main(){
                 cout << " PALAVRA: ";
                 cin >> palavra;  
                 cout << "---------------------------------------------" << endl << endl;
-                exp->transicaoEstendida(palavra);
+                exp->funcaoTransicaoEstendida(palavra);
                 break;
             case 0:
                 cout << "PROGRAMA ENCERRADO COM SUCESSO!" << endl;
