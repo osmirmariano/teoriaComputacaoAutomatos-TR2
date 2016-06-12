@@ -9,13 +9,11 @@ using namespace std;
 
 class Expressao{
     public:
-        int cont;
-        vector<string> alfabetos;
-        vector<char> alfa;
+        int pertence;
 
     public:
         Expressao(){
-
+            this->pertence = 0;
         };
 
         ~Expressao();
@@ -44,7 +42,7 @@ class Expressao{
 
         /*-----------------------------FUNÇÃO DE TRNASIÇÃO ESTENDIDA DA LINGUAGEM --------------------------*/
         void funcaoTransicaoEstendida(string palavra){
-            int tam = 0, pertence = 0;
+            int tam = 0;
             string q0, q1, q2, q3, q4, q5, q6, q7, estado="q0";
             tam = palavra.length();
 
@@ -125,11 +123,6 @@ class Expressao{
                                                         estado = "q0";
                                                     }
                                                 }
-                                                else{
-                                                    if(palavra[x] == ' '){
-                                                        estado = "q0";
-                                                    }
-                                                }
                                             } 
                                         }
                                     }
@@ -139,8 +132,9 @@ class Expressao{
                     }
                 }
             }
-            cout << endl << " ESTADO RETORNADO: " << estado << endl;
+            
             if(pertence == 0){
+                cout << endl << " ESTADO RETORNADO: " << estado << endl;
                 if (estado == "q4" || estado == "q5" || estado == "q6" || estado == "q7"){
                     cout << "---------------------------------------------" << endl;
                     cout << " PALAVRA ACEITA PELA O AUTÔMATO!" << endl;
@@ -155,12 +149,8 @@ class Expressao{
                 }
             }
             else{
-                cout << "A PALAVRA NÃO PERTENCE AO ALFABETO" << endl;
+                cout << " A PALAVRA NÃO PERTENCE AO ALFABETO" << endl;
             }
             
-        };
-
-        
-        
-
+        };     
 };

@@ -20,7 +20,7 @@ int main(){
         cout << " 2 -- FUNCAO DE TRANSICAO ESTENDIDA" << endl;
         cout << " 0 -- SAIR " << endl;
         cout << "---------------------------------------------" << endl;
-        cout << "OPCAO: ";
+        cout << " OPCAO: ";
         cin >> op;
         cout << "---------------------------------------------" << endl << endl;
 
