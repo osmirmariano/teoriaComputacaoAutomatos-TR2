@@ -10,10 +10,12 @@ using namespace std;
 class Expressao{
     public:
         int pertence;
+        string palavra;
 
     public:
         Expressao(){
             this->pertence = 0;
+            this->palavra = palavra;
         };
 
         ~Expressao();
@@ -40,117 +42,94 @@ class Expressao{
             cout << "---------------------------------------------" << endl << endl;
         };
 
-        /*-----------------------------FUNÇÃO DE TRNASIÇÃO ESTENDIDA DA LINGUAGEM --------------------------*/
-        void funcaoTransicaoEstendida(string palavra){
-            int tam = 0;
-            string q0, q1, q2, q3, q4, q5, q6, q7, estado="q0";
-            tam = palavra.length();
+        //FUNÇÃO DE TRANSIÇÃO
+        string funcaoTransicao(string estado, char simbolo){
+            if (estado == "q0"){                
+                if(simbolo == 'a'){
+                    return "q1";
+                }
+                else
+                    return "q0";
+            }
+            else if (estado == "q1"){          
+                if(simbolo == 'a')
+                    return "q2";
+                else
+                    return "q3";
+            }
+            else if (estado == "q2"){           
+                if(simbolo == 'a')
+                    return "q4";
+                else
+                    return "q5";
+            }
+            else if (estado == "q3"){          
+                if(simbolo == 'a')
+                    return "q6";
+                else
+                    return "q7";
+            }
+            else if (estado == "q4"){      
+                if(simbolo == 'a')
+                    return "q4";
+                else
+                    return "q5";
+            }
+            else if (estado == "q5"){        
+                if(simbolo == 'a')
+                    return "q6";
+                else
+                    return "q7";
+            }
+            else if (estado == "q6"){           
+                if(simbolo == 'a')
+                    return "q2";
+                else
+                    return "q3";
+            }
+            else if (estado == "q7"){           
+                if(simbolo == 'a')
+                    return "q1";
+                else
+                    return "q0";
+            }
+        };
 
-            for(int x = 0; x < tam; x++){
-                if(palavra[x] != 'a' && palavra[x] != 'b'){
-                    pertence = 1;
-                }
-                else{
-                    if(estado == "q0"){
-                        if(palavra[x] == 'a'){
-                            estado = "q1";
-                        }
-                        else{
-                            if(palavra[x] == 'b')
-                                estado == "q0";
-                        }
-                    }
-                    else{
-                        if (estado == "q1"){
-                            if(palavra[x] == 'a'){
-                                estado = "q2";
-                            }
-                            else if(palavra[x] == 'b'){
-                                estado = "q3";
-                            }
-                        }
-                        else{
-                            if(estado == "q2"){
-                                if(palavra[x] == 'a'){
-                                    estado = "q4";
-                                }
-                                else if(palavra[x] == 'b'){
-                                    estado = "q5";
-                                }
-                            }
-                            else{
-                                if (estado == "q3"){
-                                    if(palavra[x] == 'a'){
-                                        estado = "q6";
-                                    }
-                                    else if(palavra[x] == 'b'){
-                                        estado = "q7";
-                                    }
-                                }
-                                else{
-                                    if (estado == "q4"){
-                                        if(palavra[x] == 'a'){
-                                            estado = "q4";
-                                        }
-                                        else if(palavra[x] == 'b'){
-                                            estado = "q5";
-                                        }
-                                    }
-                                    else{
-                                        if (estado == "q5"){
-                                            if(palavra[x] == 'a'){
-                                                estado = "q6";
-                                            }
-                                            else if(palavra[x] == 'b'){
-                                                estado = "q7";
-                                            }
-                                        }
-                                        else{
-                                            if (estado == "q6"){
-                                                if(palavra[x] == 'a'){
-                                                    estado = "q2";
-                                                }
-                                                else if(palavra[x] == 'b'){
-                                                    estado = "q3";
-                                                }
-                                            }
-                                            else{
-                                                if (estado == "q7"){
-                                                    if(palavra[x] == 'a'){
-                                                        estado = "q1";
-                                                    }
-                                                    else if(palavra[x] == 'b'){
-                                                        estado = "q0";
-                                                    }
-                                                }
-                                            } 
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        /*-------------------------FUNÇÃO DE TRNASIÇÃO ESTENDIDA DA LINGUAGEM ------------------*/
+        string funcaoTransicaoEstendida(string estado, string palavra){
+            string resto = "&";
+            char simbolo;
+            int tamanho = 0;
+            tamanho = palavra.length();
+            simbolo = palavra[tamanho-1];
+
+            //FUNÇÃO DE TRANSIÇÃO - BASE
+            if(palavra == "&")
+                return estado;
+
+            //FUNÇÃO DE TRANSIÇÃO ESTENDIDA
+            for(int x = 0; x < tamanho-2; x++){
+                resto = resto + "&";
             }
             
-            if(pertence == 0){
-                cout << endl << " ESTADO RETORNADO: " << estado << endl;
-                if (estado == "q4" || estado == "q5" || estado == "q6" || estado == "q7"){
-                    cout << "---------------------------------------------" << endl;
-                    cout << " PALAVRA ACEITA PELA O AUTÔMATO!" << endl;
-                    cout << " \tESTADO " << estado << " É FINAL" << endl;
-                    cout << "---------------------------------------------" << endl;
-                }
-                else{
-                    cout << "---------------------------------------------" << endl;
-                    cout << " PALAVRA NÃO É ACEITA PELO O AUTÔMATO!" << endl;
-                    cout << "\tESTADO " << estado << " NÃO É FINAL" << endl;
-                    cout << "---------------------------------------------" << endl;
-                }
+            for(int x = 0; x < tamanho-1; x++){
+                resto[x] = palavra[x];
             }
-            else{
-                cout << " A PALAVRA NÃO PERTENCE AO ALFABETO" << endl;
-            }
-            
+
+            estado = funcaoTransicao(funcaoTransicaoEstendida(estado, resto), simbolo);
+            return estado;            
         };     
+
+        //FUNÇÃO PARA VERIFICAR SE A ṔALAVRA PERTENCE AO AUTOMATO E AO ALFABETO
+        int verificaPalavraPertence(string palavraInformada){
+            int tamanho =  palavraInformada.length();
+            int pertence = 0;
+            for(int x = 0; x < tamanho; x++){
+                if(palavraInformada[x] != 'a' && palavraInformada[x] != 'b'){
+                    return 1;
+                }
+            }
+            return 0;
+            
+        };
 };

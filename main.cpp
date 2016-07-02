@@ -6,7 +6,7 @@ using namespace std;
 
 int main(){
     int op, quantidade;
-    string palavra;
+    string palavraInformada, estado, palavra;
 
     Expressao *exp = new Expressao();
 
@@ -36,9 +36,28 @@ int main(){
                 cout << "\t FUNCAO DE TRANSICAO ESTENDIDA" << endl;
                 cout << "---------------------------------------------" << endl;
                 cout << " PALAVRA: ";
-                cin >> palavra;  
+                cin >> palavraInformada;  
                 cout << "---------------------------------------------" << endl << endl;
-                exp->funcaoTransicaoEstendida(palavra);
+                estado = "q0";
+                if(exp->verificaPalavraPertence(palavraInformada) == 0){
+                    estado = exp->funcaoTransicaoEstendida(estado, palavraInformada);
+                    if (estado == "q4" || estado == "q5" || estado == "q6" || estado == "q7"){
+                        cout << "---------------------------------------------" << endl;
+                        cout << " PALAVRA ACEITA PELA O AUTÔMATO!" << endl;
+                        cout << " \tESTADO " << estado << " É FINAL" << endl;
+                        cout << "---------------------------------------------" << endl;
+                    }
+                    else{
+                        cout << "---------------------------------------------" << endl;
+                        cout << " PALAVRA NÃO É ACEITA PELO O AUTÔMATO!" << endl;
+                        cout << "\tESTADO " << estado << " NÃO É FINAL" << endl;
+                        cout << "---------------------------------------------" << endl;
+                    }
+                }
+                else{
+                    cout << " A PALAVRA NÃO PERTENCE AO ALFABETO {a,b}" << endl;
+                }
+                //exp->verificaPalavraPertence(palavraInformada);                
                 break;
             case 0:
                 cout << "PROGRAMA ENCERRADO COM SUCESSO!" << endl;
